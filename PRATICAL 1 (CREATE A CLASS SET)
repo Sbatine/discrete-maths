@@ -1,0 +1,263 @@
+Create A Class SET. Create Member Functions To Perform The Following SET Operations:
+1) Is Member: Check Whether An Element Belongs To The Set Or Not And Return Value As True/False.
+2) Powerset: List All The Elements Of The Power Set Of A Set.
+3) Subset: Check Whether One Set Is A Subset Of The Other Or Not.
+4) Union And Intersection Of Two Sets.
+5) Complement: Assume Universal Set As Per The Input Elements From The User.
+6) Set Difference And Symmetric Difference Between Two Sets.
+7) Cartesian Product Of Sets.
+Write A Menu Driven Program To Perform The Above Functions On An Instance Of The SET Class.
+
+CODE:
+
+class SET:
+
+    def __init__(self, u_set):
+        self.u_set = set(u_set)
+
+    def is_member(self, element):
+        return element in self.u_set
+
+    def powerset(self):
+        lst = []
+        length = len(self.u_set)
+        u_list = list(self.u_set)
+        for i in range(1 << length):
+            lst.append({u_list[j] for j in range(length) if (i & (1 << j))})
+        return lst
+
+    def subset(self, subset_set):
+        return subset_set.u_set.issubset(self.u_set)
+
+    def union_intersection(self, set2):
+        return self.u_set.union(set2.u_set), self.u_set.intersection(set2.u_set)
+
+    def complement(self, subset):
+        return self.u_set.difference(subset.u_set)
+
+    def difference_and_symmetric_difference(self, another_set):
+        return (
+            self.u_set.difference(another_set.u_set),
+            self.u_set.symmetric_difference(another_set.u_set)
+        )
+
+    def cartesian_product(self, set2):
+        return [(a, b) for a in self.u_set for b in set2.u_set]
+
+
+def set_create(prompt="Set"):
+    s = input(f"Enter elements of {prompt} (space-separated integers): ")
+    return set(map(int, s.split()))
+
+
+def main():
+    while True:
+        print("""
+==============================
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        """)
+        choice = input("Enter Your Choice (1-8): ")
+
+        if choice == '1':
+            set1 = SET(set_create("Main Set"))
+            element = int(input("Enter Element to Search: "))
+            print("Element Found" if set1.is_member(element) else "Element Not Found")
+
+        elif choice == '2':
+            set1 = SET(set_create("Main Set"))
+            print("Power Set:")
+            for subset in set1.powerset():
+                print(subset)
+
+        elif choice == '3':
+            universal = SET(set_create("Main Set"))
+            possible_subset = SET(set_create("Subset"))
+            print("Is Subset" if universal.subset(possible_subset) else "Is Not Subset")
+
+        elif choice == '4':
+            set1 = SET(set_create("First Set"))
+            set2 = SET(set_create("Second Set"))
+            union, intersection = set1.union_intersection(set2)
+            print("Union:", union)
+            print("Intersection:", intersection)
+
+        elif choice == '5':
+            universal = SET(set_create("Universal Set"))
+            subset = SET(set_create("Subset"))
+            print("Complement:", universal.complement(subset))
+
+        elif choice == '6':
+            set1 = SET(set_create("First Set"))
+            set2 = SET(set_create("Second Set"))
+            diff, sym_diff = set1.difference_and_symmetric_difference(set2)
+            print("Difference:", diff)
+            print("Symmetric Difference:", sym_diff)
+
+        elif choice == '7':
+            set1 = SET(set_create("First Set"))
+            set2 = SET(set_create("Second Set"))
+            print("Cartesian Product:", set1.cartesian_product(set2))
+
+        elif choice == '8':
+            print("Exiting Program.")
+            break
+
+        else:
+            print("Invalid choice! Please select between 1 to 8.")
+
+
+if __name__ == "__main__":
+    main()
+
+OUTPUT:
+
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        
+Enter Your Choice (1-8): 1
+Enter elements of Main Set (space-separated integers): 1 3 5 7
+Enter Element to Search: 8
+Element Not Found
+
+==============================
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        
+Enter Your Choice (1-8): 2       
+Enter elements of Main Set (space-separated integers): 4 5 7 5
+Power Set:
+set()
+{4}
+{5}
+{4, 5}
+{7}
+{4, 7}
+{5, 7}
+{4, 5, 7}
+
+==============================
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        
+Enter Your Choice (1-8): 3
+Enter elements of Main Set (space-separated integers): 5 6 3 8 9
+Enter elements of Subset (space-separated integers): 4 6 2
+Is Not Subset
+
+==============================
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        
+Enter Your Choice (1-8): 4
+Enter elements of First Set (space-separated integers): 1 88 4 6 2 86
+Enter elements of Second Set (space-separated integers): 7 8 5 6 42 5
+Union: {1, 2, 4, 5, 6, 7, 8, 42, 86, 88}
+Intersection: {6}
+
+==============================
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        
+Enter Your Choice (1-8): 5
+Enter elements of Universal Set (space-separated integers): 8 54 9 5
+Enter elements of Subset (space-separated integers): 8 5 4 7
+Complement: {9, 54}
+
+==============================
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        
+Enter Your Choice (1-8): 6
+Enter elements of First Set (space-separated integers): 5 4 59 8 9 2
+Enter elements of Second Set (space-separated integers): 8 5 6 7 4
+Difference: {9, 2, 59}
+Symmetric Difference: {2, 6, 7, 9, 59}
+
+==============================
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        
+Enter Your Choice (1-8): 7
+Enter elements of First Set (space-separated integers): 85 6 8 9 4 5
+Enter elements of Second Set (space-separated integers): 8 5 6 7 4
+Cartesian Product: [(4, 4), (4, 5), (4, 6), (4, 7), (4, 8), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (6, 4), (6, 5), (6, 6), (6, 7), (6, 8), (85, 4), (85, 5), (85, 6), (85, 7), (85, 8), (8, 4), (8, 5), (8, 6), (8, 7), (8, 8), (9, 4), (9, 5), (9, 6), (9, 7), (9, 8)]
+
+==============================
+Set Operations Menu:
+1. Check Whether An Element Belongs To The Set
+2. List All Elements Of The Power Set
+3. Check Whether One Set Is A Subset Of Another
+4. Find Union And Intersection Of Two Sets
+5. Find Complement Of A Set
+6. Find Difference And Symmetric Difference Between Two Sets
+7. Find Cartesian Product Of Two Sets
+8. Exit
+==============================
+        
+Enter Your Choice (1-8): 8
+Exiting Program.
