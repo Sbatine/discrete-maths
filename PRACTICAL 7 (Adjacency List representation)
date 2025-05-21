@@ -3,7 +3,7 @@
 using the Adjacency List representation
 class Graph:
 
-
+class Graph:
     def __init__(self, vertices):
         self.vertices = vertices
         self.adj_list = [[] for _ in range(vertices)]
