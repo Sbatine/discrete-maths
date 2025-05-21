@@ -1,0 +1,53 @@
+For any number n, write a program to list all the solutions of the equation x, + X2 +
+X3+...+ x, = C, where C is a constant (C<=10) and X,, X2,33,..,X, are nonnegative
+integers, using brute force strategy.
+
+def find_solutions(C, n):
+    def generate_solutions(current_sum, current_solution, terms_left):
+        if terms_left == 0:
+            if current_sum == C:
+                solutions.append(current_solution[:])
+            return
+        
+        for i in range(C - current_sum + 1):  # from 0 to (C - current sum)
+            current_solution.append(i)
+            generate_solutions(current_sum + i, current_solution, terms_left - 1)
+            current_solution.pop()
+
+    solutions = []
+    generate_solutions(0, [], n)
+    return solutions
+
+if __name__ == "__main__":
+    n = int(input("Enter number of terms: "))
+    C = int(input("Enter value of constant (C <= 10): "))
+    
+    if C > 10 or C < 0:
+        print("C must be between 0 and 10 inclusive.")
+    else:
+        all_solutions = find_solutions(C, n)
+        print(f"All solutions for {n} terms where the sum is {C}:")
+        for solution in all_solutions:
+            print(solution)
+
+
+OUTPUT:
+
+Enter number of terms: 3
+Enter value of constant (C <= 10): 4
+All solutions for 3 terms where the sum is 4:
+[0, 0, 4]
+[0, 1, 3]
+[0, 2, 2]
+[0, 3, 1]
+[0, 4, 0]
+[1, 0, 3]
+[1, 1, 2]
+[1, 2, 1]
+[1, 3, 0]
+[2, 0, 2]
+[2, 1, 1]
+[2, 2, 0]
+[3, 0, 1]
+[3, 1, 0]
+[4, 0, 0]
