@@ -1,0 +1,75 @@
+
+
+"""
+Write a program that generates all the permutations of a given set, 
+with or without repetition.
+"""
+
+from itertools import permutations, product
+
+def generate_permutations(elements, repetition):
+    if repetition:
+        return list(product(elements, repeat=len(elements)))
+    else:
+        return list(permutations(elements))
+
+if __name__ == "__main__":
+    elements = list(map(int, input("Enter all elements of set with space: ").split()))
+    
+    with_repetition = generate_permutations(elements, repetition=True)
+    without_repetition = generate_permutations(elements, repetition=False)
+
+    print("\nPermutations with repetition:")
+    for perm in with_repetition:
+        print(perm)
+
+    print("\nPermutations without repetition:")
+    for perm in without_repetition:
+        print(perm)
+
+    print("\nTotal with repetition:", len(with_repetition))
+    print("Total without repetition:", len(without_repetition))
+
+OUTPUT:
+
+Enter all elements of set with space: 1 2 3
+
+Permutations with repetition:
+(1, 1, 1)
+(1, 1, 2)
+(1, 1, 3)
+(1, 2, 1)
+(1, 2, 2)
+(1, 2, 3)
+(1, 3, 1)
+(1, 3, 2)
+(1, 3, 3)
+(2, 1, 1)
+(2, 1, 2)
+(2, 1, 3)
+(2, 2, 1)
+(2, 2, 2)
+(2, 2, 3)
+(2, 3, 1)
+(2, 3, 2)
+(2, 3, 3)
+(3, 1, 1)
+(3, 1, 2)
+(3, 1, 3)
+(3, 2, 1)
+(3, 2, 2)
+(3, 2, 3)
+(3, 3, 1)
+(3, 3, 2)
+(3, 3, 3)
+
+Permutations without repetition:
+(1, 2, 3)
+(1, 3, 2)
+(2, 1, 3)
+(2, 3, 1)
+(3, 1, 2)
+(3, 2, 1)
+
+Total with repetition: 27
+Total without repetition: 6
