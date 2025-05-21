@@ -1,0 +1,21 @@
+Write a Program to evaluate a polynomial function. (For example store f(x) = 4n* +
+2n + 9 in an array and for a given value of n, say n = 5, compute the value of f(n)).
+
+
+def solve_polynomial():
+    coeffs = list(map(int, input("Enter your polynomial coefficients separated with space: ").split()))
+    x = int(input("Enter the value of your variable: "))
+    result = 0
+    degree = len(coeffs) - 1
+
+    for i, coef in enumerate(coeffs):
+        result += coef * (x ** (degree - i))
+    
+    return result
+
+print(solve_polynomial())
+
+OUTPUT:
+Enter your polynomial coefficients separated with space: 3 6 9 4
+Enter the value of your variable: 3
+166
