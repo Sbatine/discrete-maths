@@ -3,7 +3,7 @@
 class DirectedGraph:
 
 
-    def __init__(self, vertices):
+  def __init__(self, vertices):
         self.vertices = vertices
         self.adj_list = [[] for _ in range(vertices)]
 
@@ -36,6 +36,7 @@ if __name__ == "__main__":
     in_degrees, out_degrees = g.compute_degrees()
     for v in range(num_vertices):
         print(f"{v}\t{in_degrees[v]}\t\t{out_degrees[v]}")
+
 
 
 OUTPUT:
